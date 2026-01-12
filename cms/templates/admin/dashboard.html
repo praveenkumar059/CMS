@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+        }
+        .menu {
+            width: 300px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        .menu a {
+            display: block;
+            padding: 10px;
+            margin: 8px 0;
+            background: #2c3e50;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 4px;
+        }
+        .menu a:hover {
+            background: #34495e;
+        }
+    </style>
+</head>
+<body>
+
+<div class="menu">
+    <h2>Admin Dashboard</h2>
+
+    <a href="{% url 'admin_add_student' %}">Add Student</a>
+    <a href="{% url 'admin_attendance' %}">Attendance</a>
+    <a href="{% url 'admin_results' %}">Semester Results</a>
+    <a href="{% url 'admin_fees' %}">Fees Entry</a>
+    <a href="{% url 'admin_messages' %}">Messages</a>
+
+    <a href="{% url 'logout' %}" style="background:red;">Logout</a>
+</div>
+
+</body>
+</html>

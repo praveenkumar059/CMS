@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Fees</title>
+</head>
+<body>
+
+<h2>Fees Entry</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>Student</label><br>
+    <select name="student">
+        {% for s in students %}
+        <option value="{{ s.id }}">{{ s.register_number }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label>Total Fee</label><br>
+    <input type="number" name="total_fee" required><br><br>
+
+    <label>Paid Amount</label><br>
+    <input type="number" name="paid_amount" required><br><br>
+
+    <button type="submit">Save Fees</button>
+</form>
+
+<br>
+<a href="{% url 'admin_dashboard' %}">Back</a>
+
+</body>
+</html>

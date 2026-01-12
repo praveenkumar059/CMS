@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Semester Results | College Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  {% load static %}
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* Base reset */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      padding: 30px 15px;
+    }
+
+    main.container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px 50px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-weight: 700;
+      font-size: 32px;
+      color: #4A90E2;
+      margin-bottom: 25px;
+      user-select: none;
+    }
+
+    /* Form styles */
+    .result-top form {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .result-top label {
+      font-weight: 500;
+      user-select: none;
+    }
+
+    select {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1.5px solid #ccc;
+      font-size: 16px;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+      min-width: 150px;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #4A90E2;
+      box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+    }
+
+    button.btn-primary {
+      background-color: #4A90E2;
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    button.btn-primary:hover {
+      background-color: #357ABD;
+    }
+
+    /* CGPA card */
+    .cgpa-card {
+      margin-top: 25px;
+      padding: 20px 25px;
+      background: #eaf2fa;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+      text-align: center;
+      user-select: none;
+    }
+
+    .cgpa-card h3 {
+      margin: 0 0 8px 0;
+      font-weight: 600;
+      color: #3a66a1;
+    }
+
+    .cgpa-card p {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2a4a7a;
+      margin: 0;
+    }
+
+    /* Results table */
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+      font-size: 16px;
+      user-select: text;
+    }
+
+    thead tr {
+      background-color: #4A90E2;
+      color: white;
+      user-select: none;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    tbody tr:hover {
+      background-color: #f1f6fb;
+    }
+
+    /* Back button */
+    .btn-back {
+      display: inline-block;
+      margin-top: 35px;
+      color: #4A90E2;
+      font-weight: 600;
+      border: 2px solid #4A90E2;
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .btn-back:hover {
+      background-color: #4A90E2;
+      color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      main.container {
+        padding: 30px 20px;
+      }
+
+      select {
+        min-width: 100%;
+      }
+
+      .result-top form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      button.btn-primary {
+        width: 100%;
+      }
+
+      th, td {
+        padding: 10px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<main class="container">
+
+  <h2>Semester Results</h2>
+
+  <!-- Semester selector + search button -->
+  <div class="result-top">
+    <form method="get" action="">
+      <label for="semester-select">Select Semester:</label>
+      <select id="semester-select" name="semester" required>
+        {% for i in "12345678" %}
+          <option value="{{ i }}" {% if selected_semester == i %}selected{% endif %}>Semester {{ i }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="btn-primary">Search</button>
+    </form>
+  </div>
+
+  <!-- CGPA Card -->
+  {% if cgpa %}
+  <div class="cgpa-card">
+    <h3>Cumulative Grade Point Average</h3>
+    <p>CGPA: <strong>{{ cgpa }}</strong></p>
+  </div>
+  {% endif %}
+
+  <!-- Results table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Subject Code</th>
+        <th>Subject Name</th>
+        <th>Grade</th>
+        <th>Credits</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in results %}
+      <tr>
+        <td>{{ r.subject_code }}</td>
+        <td>{{ r.subject_name }}</td>
+        <td>{{ r.grade }}</td>
+        <td>{{ r.credits }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" style="text-align:center; padding: 20px;">No results available</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Back button -->
+  <div>
+    <a href="{% url 'student_dashboard' %}" class="btn-back">← Back to Dashboard</a>
+  </div>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Messages & Announcements | College Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  {% load static %}
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f9fbfd;
+      color: #333;
+      padding: 30px 15px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    main.container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px 45px;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      user-select: none;
+    }
+
+    h2 {
+      font-weight: 700;
+      font-size: 32px;
+      color: #4A90E2;
+      margin-bottom: 30px;
+      user-select: text;
+    }
+
+    /* Message cards */
+    .message {
+      border-radius: 10px;
+      padding: 20px 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: default;
+      user-select: text;
+    }
+
+    .message:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .message h4 {
+      margin: 0 0 10px;
+      font-weight: 600;
+      color: #222;
+      font-size: 22px;
+    }
+
+    .message p {
+      margin: 0 0 10px;
+      color: #555;
+      line-height: 1.5;
+      font-size: 16px;
+    }
+
+    .message small {
+      font-size: 0.85em;
+      color: #888;
+    }
+
+    /* Message types with colored borders and backgrounds */
+    .important {
+      border-left: 6px solid #f39c12;
+      background-color: #fff8e1;
+    }
+
+    .urgent {
+      border-left: 6px solid #e74c3c;
+      background-color: #fdecea;
+    }
+
+    .info {
+      border-left: 6px solid #3498db;
+      background-color: #e8f4fd;
+    }
+
+    /* Back link styling */
+    .btn-back {
+      display: inline-block;
+      margin-top: 35px;
+      color: #4A90E2;
+      text-decoration: none;
+      font-weight: 600;
+      border: 2px solid #4A90E2;
+      padding: 12px 28px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+
+    .btn-back:hover {
+      background-color: #4A90E2;
+      color: white;
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      main.container {
+        padding: 30px 20px;
+      }
+      h2 {
+        font-size: 26px;
+      }
+      .message h4 {
+        font-size: 18px;
+      }
+      .message p {
+        font-size: 14px;
+      }
+      .btn-back {
+        padding: 10px 22px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<main class="container">
+
+  <h2>Messages & Announcements</h2>
+
+  {% for msg in messages %}
+    <div class="message
+      {% if msg.category == 'important' %}important
+      {% elif msg.category == 'urgent' %}urgent
+      {% elif msg.category == 'info' %}info
+      {% endif %}">
+      <h4>{{ msg.title }}</h4>
+      <p>{{ msg.content }}</p>
+      <small>{{ msg.created_at|date:"d M Y, H:i" }}</small>
+    </div>
+  {% empty %}
+    <p>No messages available.</p>
+  {% endfor %}
+
+  <a href="{% url 'student_dashboard' %}" class="btn-back">← Back to Dashboard</a>
+
+</main>
+
+</body>
+</html>

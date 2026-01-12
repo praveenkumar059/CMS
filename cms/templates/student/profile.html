@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Profile | College Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  {% load static %}
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome (optional, in case you want icons later) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* Base reset */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      padding: 30px 15px;
+    }
+
+    main.container {
+      max-width: 900px;
+      background: white;
+      margin: 0 auto;
+      padding: 40px 50px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-weight: 700;
+      font-size: 32px;
+      color: #4A90E2;
+      margin-bottom: 8px;
+      user-select: none;
+    }
+
+    .subtitle {
+      font-weight: 500;
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 16px;
+      user-select: none;
+    }
+
+    /* Profile Card */
+    .profile-card {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 40px;
+      user-select: none;
+    }
+
+    .profile-card .avatar {
+      width: 100px;
+      height: 100px;
+      background: #4A90E2;
+      border-radius: 50%;
+      color: white;
+      font-weight: 700;
+      font-size: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.5);
+      user-select: none;
+    }
+
+    .profile-card h3 {
+      margin: 0 0 8px 0;
+      font-weight: 700;
+      font-size: 24px;
+      color: #2c3e50;
+    }
+
+    .profile-card p {
+      margin: 0 0 6px 0;
+      font-weight: 500;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .profile-card span {
+      font-weight: 600;
+      font-size: 14px;
+      color: #999;
+      user-select: text;
+    }
+
+    /* Grid for details */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .info-box {
+      background: #f0f4f9;
+      border-radius: 12px;
+      padding: 20px 18px;
+      box-shadow: inset 0 0 12px #d9e2ec;
+      font-size: 15px;
+      font-weight: 500;
+      color: #4A90E2;
+      text-align: center;
+      user-select: text;
+      transition: background-color 0.3s ease;
+      cursor: default;
+    }
+
+    .info-box strong {
+      display: block;
+      margin-top: 8px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #2c3e50;
+    }
+
+    .info-box.full {
+      grid-column: 1 / -1; /* Span full width */
+    }
+
+    /* Back button */
+    .btn-back {
+      display: inline-block;
+      margin-top: 30px;
+      color: #4A90E2;
+      font-weight: 600;
+      border: 2px solid #4A90E2;
+      padding: 10px 22px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .btn-back:hover {
+      background-color: #4A90E2;
+      color: white;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 480px) {
+      main.container {
+        padding: 30px 25px;
+      }
+      .profile-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      .info-box {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+
+    <h2>Student Profile</h2>
+    <p class="subtitle">Personal and academic information</p>
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
+      <div class="avatar">
+        {{ profile.user.get_full_name|default:profile.user.username|slice:":2"|upper }}
+      </div>
+      <div>
+        <h3>{{ profile.user.get_full_name|default:profile.user.username }}</h3>
+        <p>{{ profile.department }}</p>
+        <span>Register No: {{ profile.register_number }}</span>
+      </div>
+    </div>
+
+    <!-- DETAILS GRID -->
+    <div class="grid">
+      <div class="info-box">
+        Register Number<br />
+        <strong>{{ profile.register_number }}</strong>
+      </div>
+
+      <div class="info-box">
+        Current Year<br />
+        <strong>{{ profile.current_year }}</strong>
+      </div>
+
+      <div class="info-box">
+        Current Semester<br />
+        <strong>{{ profile.current_semester }}</strong>
+      </div>
+
+      <div class="info-box">
+        Email<br />
+        <strong>{{ profile.user.email }}</strong>
+      </div>
+
+      <div class="info-box">
+        Phone<br />
+        <strong>{{ profile.phone_number }}</strong>
+      </div>
+
+      <div class="info-box">
+        Blood Group<br />
+        <strong>{{ profile.blood_group }}</strong>
+      </div>
+
+      <div class="info-box full">
+        Address<br />
+        <strong>{{ profile.address }}</strong>
+      </div>
+    </div>
+
+    <!-- BACK BUTTON -->
+    <div style="margin-top: 25px;">
+      <a href="{% url 'student_dashboard' %}" class="btn-back">
+        ← Back to Dashboard
+      </a>
+    </div>
+
+  </main>
+
+</body>
+</html>

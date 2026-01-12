@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>College Management System - Login</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #4A90E2, #6ff6fb);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+  }
+
+  .login-container {
+    background: #fffefe;
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 350px;
+    max-width: 90%;
+    text-align: center;
+  }
+
+  .login-container .logo {
+    font-size: 48px;
+    margin-bottom: 15px;
+  }
+
+  .login-container h2 {
+    margin-bottom: 30px;
+    font-weight: 600;
+    color: #4A90E2;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    text-align: left;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1.8px solid #d0cfcf;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    outline: none;
+    border-color: #4A90E2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    background-color: #4A90E2;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #438ec8;
+  }
+
+  .forgot-password {
+    margin-top: 15px;
+    font-size: 14px;
+  }
+
+  .forgot-password a {
+    color: #4A90E2;
+    text-decoration: none;
+  }
+
+  .forgot-password a:hover {
+    text-decoration: underline;
+  }
+
+  .error-message {
+    color: #e74c3c;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 400px) {
+    .login-container {
+      padding: 30px 25px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <div class="logo" aria-label="College Logo">🎓</div>
+  <h2>College Management System</h2>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+
+    <label for="username">Username / Register Number</label>
+    <input type="text" id="username" name="username" placeholder="Enter username or register no" required autofocus />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" placeholder="Enter your password" required />
+
+    {% if error %}
+      <p class="error-message">{{ error }}</p>
+    {% endif %}
+
+    <button type="submit">Log In</button>
+  </form>
+
+</div>
+
+</body>
+</html>
